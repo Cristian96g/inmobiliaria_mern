@@ -3,6 +3,7 @@ import mongoose from 'mongoose';
 import dotenv from 'dotenv';
 import userRouter from './routes/userRouter.js';
 import authRouter from './routes/authRouter.js';
+import listingRouter from './routes/listingRouter.js';
 dotenv.config();
 
 const app = express();
@@ -18,7 +19,7 @@ app.use(express.json());
 app.listen(3000, () => {
     console.log('Server listening on port 3000');
 });
-
+app.use('/api/listing', listingRouter);
 app.use('/api/user', userRouter);
 app.use('/api/auth', authRouter);
 

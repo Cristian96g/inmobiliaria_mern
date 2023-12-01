@@ -1,20 +1,23 @@
 import React, { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 
+
 const SignIn = () => {
   const [formData, setFormData] = useState({});
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
   const Navigate = useNavigate();
 
+
   const handleChangeFormData = (event) => {
+    console.log(event.target.id, event.target.value)
     setFormData({ ...formData, [event.target.id]: event.target.value })
   }
   const handleSubmit = async (event) => {
     event.preventDefault()
     try {
     setLoading(true);
-    const res = await fetch('/api/auth/signup',
+    const res = await fetch('/api/auth/signin',
       {
         method: 'POST',
         headers: {
@@ -28,11 +31,13 @@ const SignIn = () => {
       setLoading(false);
       return;
     }
+    
     setLoading(false);
     setError(null);
     Navigate('/');
   } catch (error) {
-    setLoading(false);
+    setError(error.message);
+      setLoading(false);
   }
   }
   return (
@@ -58,7 +63,7 @@ const SignIn = () => {
               </div>
               <button disabled={loading} type="submit" className="w-full text-white bg-primary-600 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center">Crear cuenta</button>
               <p className="text-sm font-light text-gray-500 ">
-                ¿Ya tienes una cuenta? <Link to={"/sign-in"} className="font-medium text-primary-600 hover:underline ">Sign In</Link>
+                ¿No tienes una cuenta? <Link to={"/sign-up"} className="font-medium text-primary-600 hover:underline ">Registrarse</Link>
               </p>
             </form>
           </div>
